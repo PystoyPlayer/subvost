@@ -1,0 +1,20 @@
+name: Build and Deploy
+
+on:
+  pull_request:
+    branches: ['release', 'stable', 'develop', 'refactor/code-base']
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.18.2'
+      - run: npm ci
+      - run: npm run build

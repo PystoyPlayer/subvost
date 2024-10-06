@@ -1,0 +1,21 @@
+name: Lint
+
+on:
+  pull_request:
+    branches: ['release', 'stable', 'develop']
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.18.0'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
